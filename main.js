@@ -3,7 +3,9 @@ textInput = document.getElementById("textInput"),
 msg = document.getElementById("msg"),
 dateInput = document.getElementById("dateInput"),
 description = document.getElementById("textarea"),
-tasks = document.getElementById("tasks");
+tasks = document.getElementById("tasks"),
+addBtn = document.getElementById("addBtn");
+
 
 form.addEventListener("submit", (e) =>{
     e.preventDefault();
@@ -19,6 +21,12 @@ let formValidation = () =>{
         console.log("success");
         msg.innerHTML = "";
         acceptData();
+        addBtn.setAttribute("data-bs-dismiss", "modal");
+        addBtn.click();
+
+        (() =>{
+            addBtn.setAttribute("data-bs-dismiss", "");
+        })();
     }
 }
 
@@ -29,7 +37,7 @@ let acceptData = () =>{
     data["date"] = dateInput.value;
     data["description"] = description.value;
 
-    console.log(data);
+    // console.log(data);
     createPost();
 }
 
@@ -41,8 +49,8 @@ let createPost = () =>{
                 <span class="text-secondary small">${data.date}</span>
                 <p>${data.description}</p>
                 <span class="options">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <i class="fa-solid fa-trash-can"></i>
+                    <i data-bs-toggle="modal" data-bs-target="#form" onClick="editTask(this)" class="fa-solid fa-pen-to-square"></i>
+                    <i onClick="deleteTask(this)" class="fa-solid fa-trash-can"></i>
                 </span>
             </div>    
         `
@@ -55,3 +63,16 @@ let resetForm= () =>{
     description.value= "";
 }
 
+let deleteTask = (e) =>{
+    e.parentElement.parentElement.remove();
+    console.log("task deleted")
+}
+
+let editTask = (e) =>{
+    let selectedTask = e.parentElement.parentElement;
+    textInput.value = selectedTask.children[0].innerHTML;
+    dateInput.value = selectedTask.children[1].innerHTML;
+    description.value= selectedTask.children[2].innerHTML;
+
+    selectedTask.remove();
+}
