@@ -22,3 +22,25 @@ body{
     border-radius: 2px;
     cursor: pointer;
 }
+
+#tasks{
+    display: grid;
+    gap: 15px;
+}
+
+#tasks div{
+    background-color: rgb(110, 103, 101);
+    padding: 10px;
+    border-radius: 5px;
+    border: 5px solid gold;
+    color: #fff;
+    display: grid;
+    gap: 15px;
+}
+
+.options{
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+    cursor: pointer;
+}
